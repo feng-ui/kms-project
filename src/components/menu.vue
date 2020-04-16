@@ -7,7 +7,13 @@
       <a-menu theme="dark" mode="inline" :defaultSelectedKeys="['1']">
         <!--侧边栏菜单区域-->
         <a-sub-menu v-for="item in menuList" :key="item" :index="item">
-         <span><a-icon :type="item.icon"/><span>{{ item }}</span></span>
+          <span><a-icon :type="item.icon"/><span>{{ item }}</span></span>
+          <a-menu-item
+            v-for="subItem in item.submenu"
+            :key="subItem"
+            :index="subItem"
+          >
+          </a-menu-item>
         </a-sub-menu>
       </a-menu>
     </a-layout-sider>
@@ -38,6 +44,7 @@
 
 <script>
   export default {
+    name: 'layout',
     data () {
       return {
         title: 'Dashboard',
@@ -46,14 +53,10 @@
         menuList: ['123', '密钥管理', '配置管理'],
         submenu: [
           {
-            text: '分析页',
-            path: '/dashboard/analysis',
-            index: '/analysis'
+            text: '用户管理'
           },
           {
-            text: '监控页',
-            path: '/dashboard/monitor',
-            index: '/monitor'
+            text: '角色管理'
           }
         ],
         collapsed: false
