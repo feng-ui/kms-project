@@ -7,6 +7,8 @@ import lineAndBar from '../components/lineAndBar.vue'
 import chartPie from '../components/chartPie.vue'
 import chartLineChange from '../components/echarts/dynamicData.vue'
 import temperatureChange from '../components/echarts/temperatureChange.vue'
+import use from '../components/system/use.vue'
+import role from '../components/system/role.vue'
 
 Vue.use(VueRouter)
 
@@ -17,7 +19,15 @@ const routes = [
   },
   {
     path: '/',
-    component: menu
+    component: menu,
+    name: 'menu',
+    children: [{
+      path: '/user',
+      component: use
+    }, {
+      path: '/role',
+      component: role
+    }]
   },
   {
     path: '/echarts',
@@ -41,6 +51,7 @@ const routes = [
   }
 ]
 const router = new VueRouter({
+  mode: 'history',
   routes
 })
 
