@@ -4,3 +4,59 @@ html, body, #app {
     padding: 0;
 
 }
+.layout {
+    height: auto;
+    overflow-x: hidden;
+}
+
+#components-layout-demo-custom-trigger .trigger:hover {
+    color: #1890ff;
+}
+
+#components-layout-demo-custom-trigger .logo {
+    height: 32px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 16px;
+}
+.trigger {
+    height: 32px;
+    width: 52px;
+    vertical-align: middle;
+}
+img {
+    width: 52px;
+    background-size: contain;
+}
+.h1 {
+    color: #fff;
+    font-size: 20px;
+    margin: 15px 0px 10px 10px;
+    font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    vertical-align: middle;
+}
+/*尾部样式*/
+.footer {
+    color: rgba(0, 0, 0, 0.45);
+    font-size: 14px;
+    text-align: center;
+}
+/*头部样式*/
+.header-animat {
+    position: relative;
+    z-index: 2;
+}
+.header {
+    height: 64px;
+    padding: 0 12px 0 0;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+    position: relative;
+}
+/*侧边栏*/
+.sider {
+    box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
+    position: relative;
+    z-index: 10;
+    min-height: 100vh;
+}
