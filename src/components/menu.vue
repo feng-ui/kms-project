@@ -4,17 +4,18 @@
       <div class="h1">
         <img src="../assets/login-logo.png" alt="">
         <span>密钥管理系统</span></div>
-      <a-menu theme="dark" mode="inline" :defaultSelectedKeys="['1']">
+      <a-menu :defaultSelectedKeys="['1']" :defaultOpenKeys="['2']" theme="dark" mode="inline"
+              :inlineCollapsed="collapsed">
         <!--侧边栏菜单区域-->
-        <a-sub-menu v-for="item in menuList" :key="item" :index="item">
-          <span><a-icon :type="item.icon"/><span>{{ item }}</span></span>
+        <template v-for="item in menuList">
           <a-menu-item
-            v-for="subItem in item.submenu"
-            :key="subItem"
-            :index="subItem"
-          >
+            v-if="!item.children" :key="item.key">
+            <span>{{item.title}}</span>
           </a-menu-item>
-        </a-sub-menu>
+          <a-sub-menu v-else :menu-info="item" :key="item.key">
+            <span><a-icon :type="item.icon"/><span>{{ item }}</span></span>
+          </a-sub-menu>
+        </template>
       </a-menu>
     </a-layout-sider>
     <a-layout>
@@ -43,22 +44,31 @@
 </template>
 
 <script>
+
   export default {
     name: 'layout',
     data () {
       return {
-        title: 'Dashboard',
-        name: '/dashboard',
-        icon: 'dashboard',
-        menuList: ['123', '密钥管理', '配置管理'],
-        submenu: [
-          {
-            text: '用户管理'
-          },
-          {
-            text: '角色管理'
-          }
-        ],
+        menuList: [{
+          key: '1',
+          title: '系统管理',
+          children: [
+            {
+              key: '1.1',
+              title: '用户管理'
+            },
+            {
+              key: '1.2',
+              title: '角色管理'
+            }
+          ]
+        }, {
+          key: '2',
+          title: '密钥管理'
+        }, {
+          key: '3',
+          title: 'echarts'
+        }],
         collapsed: false
       }
     },
