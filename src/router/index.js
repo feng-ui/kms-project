@@ -7,8 +7,8 @@ import lineAndBar from '../components/lineAndBar.vue'
 import chartPie from '../components/chartPie.vue'
 import chartLineChange from '../components/echarts/dynamicData.vue'
 import temperatureChange from '../components/echarts/temperatureChange.vue'
-import use from '../components/system/use.vue'
-import role from '../components/system/role.vue'
+import use from '../views/system/user.vue'
+import role from '../views/system/role.vue'
 
 Vue.use(VueRouter)
 

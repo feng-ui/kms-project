@@ -12,10 +12,10 @@
             <a-icon :type="item.icon"></a-icon>
             <span>{{item.title}}</span>
           </a-menu-item>
-          <a-sub-menu v-else :key="item.key">
+          <a-sub-menu v-else :key="item.key" >
             <span slot="title"><a-icon :type="item.icon"></a-icon><span>{{ item.title }}</span></span>
             <a-menu-item v-for="subItem in item.children" :key="subItem.key">
-              <a :href="subItem.path">{{subItem.title}}</a>
+              <router-link :to="subItem.path">{{subItem.title}}</router-link>
             </a-menu-item>
           </a-sub-menu>
         </template>
@@ -65,7 +65,7 @@
             {
               key: '1.1',
               title: '用户管理',
-              path: 'http://localhost:8080/user'
+              path: '../user'
             },
             {
               key: '1.2',
