@@ -11,9 +11,15 @@
     </div>
     <div class="page-content">
       <a-card :bordered="false">
-        <a-row class="row-space">
-          <a-button type="primary">{{system.add}}</a-button>
-        </a-row>
+        <div class="add-bottom-space">
+          <a-button type="primary" @click="addShow()">{{system.add}}</a-button>
+          <a-modal :title="system.addAdmin" v-model="visible" @ok="handleConfirm" @cancel="handleCancel">
+            <div >
+
+            </div>
+          </a-modal>
+
+        </div>
         <a-table :columns="columns"
                  :dataSource="dataSource"></a-table>
       </a-card>
@@ -29,8 +35,11 @@
         system: {
           manage: '系统管理',
           user: '用户管理',
-          add: '添加'
+          add: '添加',
+          addAdmin: '添加管理员'
         },
+        visible: false,
+        showModal: false,
         columns: [
           {
             title: '编号'
@@ -61,6 +70,11 @@
           }
         ]
       }
+    },
+    methods: {
+      addShow () {
+        this.visible = true
+      }
     }
   }
 </script>
@@ -76,15 +90,6 @@
     margin-bottom: 10px;
   }
 
-  detail {
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 28px;
-    color: rgba(0, 0, 0, 0.85);
-    margin-bottom: 16px;
-    flex: auto;
-  }
-
   h1 {
     display: block;
     font-size: 20px;
@@ -94,7 +99,8 @@
     margin-bottom: 16px;
     flex: auto;
   }
-  .row-space {
+
+  .add-bottom-space {
     margin-bottom: 24px;
   }
 </style>
