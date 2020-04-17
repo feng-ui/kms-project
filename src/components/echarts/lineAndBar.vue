@@ -1,5 +1,5 @@
 <template>
-  <div class="chart" ref="myEchart" >
+  <div class="chart" ref="myEchart" :style="{width: '400px', height: '400px'}" >
   </div>
 </template>
 
@@ -25,20 +25,6 @@
               crossStyle: {
                 color: '#999'
               }
-            }
-          },
-          toolbox: {
-            feature: {
-              dataView: {
-                show: true,
-                readOnly: false
-              },
-              magicType: {
-                show: true,
-                type: ['line', 'bar']
-              },
-              restore: { show: true },
-              saveAsImage: { show: true }
             }
           },
           legend: {

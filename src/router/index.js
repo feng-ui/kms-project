@@ -2,9 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../components/login.vue'
 import menu from '../components/menu.vue'
-import echarts from '../components/echarts.vue'
-import lineAndBar from '../components/lineAndBar.vue'
-import chartPie from '../components/chartPie.vue'
+import echarts from '../components/echarts/echarts.vue'
+import lineAndBar from '../components/echarts/lineAndBar.vue'
+import chartPie from '../components/echarts/chartPie.vue'
 import chartLineChange from '../components/echarts/dynamicData.vue'
 import temperatureChange from '../components/echarts/temperatureChange.vue'
 import use from '../views/system/user.vue'
@@ -27,20 +27,22 @@ const routes = [
     }, {
       path: '/role',
       component: role
-    }]
+    },
+     {
+        path: '/echarts',
+        component: echarts
+      },
+      {
+        path: '/lineAndBar',
+        component: lineAndBar
+      },
+      {
+        path: '/chartPie',
+        component: chartPie
+      }
+    ]
   },
-  {
-    path: '/echarts',
-    component: echarts
-  },
-  {
-    path: '/lineAndBar',
-    component: lineAndBar
-  },
-  {
-    path: '/chartPie',
-    component: chartPie
-  },
+
   {
     path: '/lineChange',
     component: chartLineChange

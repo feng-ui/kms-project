@@ -27,17 +27,12 @@
         <a-layout-header class="[sidebarOpened ? 'ant-header-side-opened' : 'ant-header-side-closed']"
                          style="background: #fff; padding: 0">
           <div class="header">
-
             <a-icon class="trigger" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click="toggle"></a-icon>
-
           </div>
-
         </a-layout-header>
       </div>
       <!--右边栏的中部-->
-      <a-layout-content
-        :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }"
-      >
+      <a-layout-content>
         <router-view></router-view>
       </a-layout-content>
       <a-layout-footer class="footer">
@@ -76,26 +71,26 @@
           ]
         }, {
           key: '2',
-          icon: 'key',
-          title: '密钥管理',
+          icon: 'line-chart',
+          title: '图表管理',
           children: [
             {
               key: '2.1',
-              title: '对称密钥管理'
+              title: '柱状图',
+              path: '../echarts'
+
             },
             {
               key: '2.2',
-              title: '对称密钥模板'
+              title: '折线图',
+              path: '../lineAndBar'
             },
             {
               key: '2.3',
-              title: '非对称密钥管理'
+              title: '饼状图',
+              path: '../chartPie'
             }
           ]
-        }, {
-          key: '3',
-          icon: 'setting',
-          title: 'echarts'
         }]
 
       }

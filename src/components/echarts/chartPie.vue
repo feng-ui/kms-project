@@ -1,5 +1,7 @@
 <template>
-  <div class="chartPie" ref="myChartPie" :style="{width: '300px', height: '300px' }"></div>
+  <div>
+  <div class="chartPie" ref="myChartPie" :style="{width: '400px', height: '400px' }"></div>
+  </div>
 </template>
 
 <script>

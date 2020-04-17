@@ -1,9 +1,3 @@
-html, body, #app {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-
-}
 .layout {
     height: auto;
     overflow-x: hidden;
@@ -15,7 +9,6 @@ html, body, #app {
 
 #components-layout-demo-custom-trigger .logo {
     height: 32px;
-    background: rgba(255, 255, 255, 0.2);
     margin: 16px;
 }
 .trigger {
@@ -48,7 +41,6 @@ img {
 }
 .header {
     height: 64px;
-    padding: 0 12px 0 0;
     background: #fff;
     box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
     position: relative;
