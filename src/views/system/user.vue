@@ -13,11 +13,6 @@
       <a-card :bordered="false">
         <div class="add-bottom-space">
           <a-button type="primary" @click="addShow()">{{system.add}}</a-button>
-          <a-modal :title="system.addAdmin" v-model="visible" @ok="handleConfirm" @cancel="handleCancel">
-            <div >
-
-            </div>
-          </a-modal>
 
         </div>
         <a-table :columns="columns"
@@ -28,6 +23,8 @@
 </template>
 
 <script>
+  import { getUserListApi } from '../axios/useApi.js'
+
   export default {
     name: '',
     data () {
@@ -40,42 +37,64 @@
         },
         visible: false,
         showModal: false,
+        dataSource: [],
         columns: [
           {
-            title: '编号'
+            title: '编号',
+            dataIndex: 'num'
           },
           {
-            title: '账号'
+            title: '账号',
+            dataIndex: 'username'
+
           },
           {
-            title: '角色'
+            title: '角色',
+            dataIndex: 'roleName'
           },
           {
-            title: '邮箱账号'
+            title: '邮箱账号',
+            dataIndex: 'email'
           },
           {
-            title: '手机账号'
+            title: '手机账号',
+            dataIndex: 'phoneNum'
           },
           {
-            title: '创建时间'
+            title: '创建时间',
+            dataIndex: 'createTime'
           },
           {
-            title: '状态'
+            title: '状态',
+            dataIndex: 'status'
           },
           {
             title: '在线状态'
           },
           {
-            title: '操作'
+            title: '操作',
+            dataIndex: 'action'
           }
         ]
       }
     },
     methods: {
       addShow () {
-        this.visible = true
+
+      },
+      loadData () {
+        const params = {
+          username: '111'
+        }
+        getUserListApi(params).then(res => {
+          console.log(res.data)
+        })
       }
+    },
+    mounted () {
+      this.loadData()
     }
+
   }
 </script>
 

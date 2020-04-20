@@ -13,7 +13,7 @@
       <a-card :bordered="false">
         <div class="add-bottom-space">
           <a-button type="primary" @click="addShow()">{{system.add}}</a-button>
-          <a-modal :title="system.addRole" v-model="visible" @ok="handleConfirm" @cancel="handleCancel">
+          <a-modal :title="system.addRole" v-model="visible">
             <div >
             </div>
           </a-modal>
@@ -40,6 +40,7 @@
         },
         visible: false,
         showModal: false,
+        dataSource: [],
         columns: [
           {
             title: '编号'

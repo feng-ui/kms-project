@@ -7,13 +7,15 @@ import Antd from 'ant-design-vue/es'
 import 'ant-design-vue/dist/antd.css'
 import echarts from 'echarts'
 import axios from 'axios'
+import qs from 'qs'
+import './mock/userMock.js'
 
 Vue.use(Antd)
 Vue.use(echarts)
-Vue.prototype.$ajax = axios
+Vue.prototype.$axios = axios
+Vue.prototype.$qs = qs
 
 Vue.config.productionTip = false
-
 new Vue({
   router,
   store,
