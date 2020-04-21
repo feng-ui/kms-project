@@ -24,6 +24,9 @@
   </div>
 </template>
 <script>
+  import { mapMutations } from 'vuex'
+  import { getLoginApi } from '../views/axios/loginApi.js'
+
   export default {
     data () {
       return {
@@ -34,16 +37,20 @@
       }
     },
     methods: {
+      ...mapMutations(['changeLogin']),
       handleLogin () {
-        if (this.loginForm.username === '' && this.loginForm.password === '123456') {
-          alert('登录成功')
-          this.loginForm = {
-            username: '',
-            password: ''
-          }
-          this.$router.push('/')
+        var self = this
+        var params = {
+          username: '',
+          password: ''
+        }
+        if (this.loginForm.username === '' && this.loginForm.password === '') {
         } else {
-          alert('登录失败')
+          getLoginApi(params).then(res => {
+            console.log(res.data)
+            self.$router.push('/')
+            alert('登陆成功')
+          })
         }
       }
     }
