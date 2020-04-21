@@ -97,7 +97,6 @@
     },
     methods: {
       toggle () {
-        alert(123)
         this.collapsed = !this.collapsed
         this.$emit('toggle', this.collapsed)
       },

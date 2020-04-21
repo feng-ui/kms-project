@@ -11,12 +11,22 @@
     </div>
     <div class="page-content">
       <a-card :bordered="false">
-        <div class="add-bottom-space">
-          <a-button type="primary" @click="addShow()">{{system.add}}</a-button>
+        <a-spin :spinning="loading">
+          <a-form :form="form">
+            <a-row :span="12">
+              <a-form-item>
+                <a-button type="primary" @click="addShow()">{{system.add}}</a-button>
+              </a-form-item>
+            </a-row>
+            <a-row>
+              <a-table :columns="columns"
+                       :loading="table.loading"
+                       :dataSource="dataSource"
+                       :pagination="pagination"></a-table>
+            </a-row>
 
-        </div>
-        <a-table :columns="columns"
-                 :dataSource="dataSource"></a-table>
+          </a-form>
+        </a-spin>
       </a-card>
     </div>
   </a-layout>
@@ -25,10 +35,53 @@
 <script>
   import { getUserListApi } from '../axios/useApi.js'
 
+  const columns = [{
+    title: '编号',
+    dataIndex: 'num'
+  },
+    {
+      title: '账号',
+      dataIndex: 'username'
+
+    },
+    {
+      title: '角色',
+      dataIndex: 'roleName'
+    },
+    {
+      title: '邮箱账号',
+      dataIndex: 'email'
+    },
+    {
+      title: '手机账号',
+      dataIndex: 'phoneNum'
+    },
+    {
+      title: '创建时间',
+      dataIndex: 'createTime'
+    },
+    {
+      title: '状态',
+      dataIndex: 'status'
+    },
+    {
+      title: '在线状态'
+    },
+    {
+      title: '操作',
+      dataIndex: 'action'
+    }]
+
   export default {
     name: '',
     data () {
       return {
+        form: this.$form.createForm(this),
+        table: {
+          loading: false
+        },
+
+        loading: false,
         system: {
           manage: '系统管理',
           user: '用户管理',
@@ -38,56 +91,20 @@
         visible: false,
         showModal: false,
         dataSource: [],
-        columns: [
-          {
-            title: '编号',
-            dataIndex: 'num'
-          },
-          {
-            title: '账号',
-            dataIndex: 'username'
-
-          },
-          {
-            title: '角色',
-            dataIndex: 'roleName'
-          },
-          {
-            title: '邮箱账号',
-            dataIndex: 'email'
-          },
-          {
-            title: '手机账号',
-            dataIndex: 'phoneNum'
-          },
-          {
-            title: '创建时间',
-            dataIndex: 'createTime'
-          },
-          {
-            title: '状态',
-            dataIndex: 'status'
-          },
-          {
-            title: '在线状态'
-          },
-          {
-            title: '操作',
-            dataIndex: 'action'
-          }
-        ]
+        pagination: {},
+        columns
       }
     },
     methods: {
       addShow () {
 
       },
-      loadData () {
-        const params = {
-          username: '111'
-        }
+      loadData (params) {
+        var self = this
+        self.table.loading = true
         getUserListApi(params).then(res => {
           console.log(res.data)
+          this.dataSource = res.data
         })
       }
     },
@@ -97,29 +114,3 @@
 
   }
 </script>
-
-<style scoped>
-  .page-header {
-    background-color: #ffffff;
-    padding: 16px 32px 0;
-    border-bottom: 1px solid #e8e8e8;
-  }
-
-  .page-header .ant-breadcrumb {
-    margin-bottom: 10px;
-  }
-
-  h1 {
-    display: block;
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 28px;
-    color: rgba(0, 0, 0, 0.85);
-    margin-bottom: 16px;
-    flex: auto;
-  }
-
-  .add-bottom-space {
-    margin-bottom: 24px;
-  }
-</style>

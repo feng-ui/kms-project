@@ -61,34 +61,3 @@
     }
   }
 </script>
-
-<style scoped>
-  .page-header {
-    background-color: #ffffff;
-    padding: 16px 32px 0;
-    border-bottom: 1px solid #e8e8e8;
-  }
-
-  .page-header .ant-breadcrumb {
-    margin-bottom: 10px;
-  }
-
-  h1 {
-    display: block;
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 28px;
-    color: rgba(0, 0, 0, 0.85);
-    margin-bottom: 16px;
-    flex: auto;
-  }
-
-  .add-bottom-space {
-    margin-bottom: 24px;
-  }
-
-  .ant-table-pagination {
-    float:right;
-    margin: 16px 0px 16px 0px;
-  }
-</style>

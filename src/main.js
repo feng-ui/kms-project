@@ -8,7 +8,7 @@ import 'ant-design-vue/dist/antd.css'
 import echarts from 'echarts'
 import axios from 'axios'
 import qs from 'qs'
-import './mock/userMock.js'
+import './views/mock/userMock.js'
 
 Vue.use(Antd)
 Vue.use(echarts)

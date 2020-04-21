@@ -53,3 +53,28 @@ img {
     z-index: 10;
     min-height: 100vh;
 }
+
+/*右边栏中部样式*/
+.page-header {
+    background-color: #ffffff;
+    padding: 16px 32px 0;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.page-header .ant-breadcrumb {
+    margin-bottom: 10px;
+}
+
+h1 {
+    display: block;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 28px;
+    color: rgba(0, 0, 0, 0.85);
+    margin-bottom: 16px;
+    flex: auto;
+}
+
+.add-bottom-space {
+    margin-bottom: 24px;
+}
