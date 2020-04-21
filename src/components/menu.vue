@@ -29,6 +29,9 @@
           <div class="header">
             <a-icon class="trigger" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click="toggle"></a-icon>
           </div>
+          <div class="echo">
+            <span>{{admin}}</span>
+          </div>
         </a-layout-header>
       </div>
       <!--右边栏的中部-->

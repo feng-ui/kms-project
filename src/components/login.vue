@@ -1,13 +1,11 @@
 <template>
   <div class="login_container">
-    用户登录
     <div class="login_box">
       <div class="avatar_box">
         <img src="../assets/logo.png" alt="">
       </div>
       <!--登录表单区域-->
       <a-form class="login_form" v-model="loginForm">
-
         <a-form-item>
           <a-input v-model="loginForm.username">
             <a-icon slot="prefix" type="user" style="color: rgba(0,0,0,.25)"/>
@@ -26,21 +24,30 @@
   </div>
 </template>
 <script>
-export default {
-  data () {
-    return {
-      loginForm: {
-        username: 'zhangsan',
-        password: '123'
+  export default {
+    data () {
+      return {
+        loginForm: {
+          username: 'admin',
+          password: '123456'
+        }
+      }
+    },
+    methods: {
+      handleLogin () {
+        if (this.loginForm.username === '' && this.loginForm.password === '123456') {
+          alert('登录成功')
+          this.loginForm = {
+            username: '',
+            password: ''
+          }
+          this.$router.push('/')
+        } else {
+          alert('登录失败')
+        }
       }
     }
-  },
-  methods: {
-    handleLogin () {
-      alert(123)
-    }
   }
-}
 </script>
 <style scoped>
   .login_container {
