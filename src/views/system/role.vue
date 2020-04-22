@@ -43,10 +43,12 @@
             </a-form>
           </a-modal>
         </div>
-        <a-table :columns="columns"
-                 :dataSource="dataSource">
-          <span slot="action" slot-scope="record">
-            <a @click="handleEdit(record.key)">{{编辑}}</a>
+        <a-table
+          :columns="columns"
+          rowKey = "(record,id) => id"
+        :dataSource="dataSource">
+        <span slot="action" slotScope="text,record">
+            <a href="javascript:" @click="handleEdit()">{{system.edit}}</a>
           </span>
         </a-table>
         <div class="ant-table-pagination">
@@ -58,10 +60,13 @@
 </template>
 
 <script>
+  import { getRoleListApi } from '../axios/roleApi.js'
+
   const columns = [
     {
       title: '编号',
       dataIndex: 'num'
+
     },
     {
       title: '角色名称',
@@ -118,6 +123,7 @@
         dataSource: [],
         selectedKeys: [],
         columns,
+        id: '',
         formItemLayout: {
           labelCol: {
             sm: 10,
@@ -136,7 +142,8 @@
           cancel: '取消',
           submit: '提交',
           permission: '角色权限',
-          rolename: '角色名称'
+          rolename: '角色名称',
+          edit: '编辑'
         }
       }
     },
@@ -145,7 +152,17 @@
         console.log('onCheck', val)
       }
     },
+    mounted () {
+      this.loadData()
+    },
     methods: {
+      loadData () {
+        var self = this
+        getRoleListApi().then(res => {
+          console.log(res.data)
+          self.dataSource = res.data.data
+        })
+      },
       addShow () {
         this.visible = true
       },
@@ -163,8 +180,8 @@
         console.log('onSelect', info)
         this.selectedKeys = selectedKeys
       },
-      handleEdit () {
-
+      handleEdit (id) {
+        alert(123)
       }
     }
   }

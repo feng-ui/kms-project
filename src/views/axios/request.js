@@ -1,5 +1,4 @@
 import axios from 'axios'
-import qs from 'qs'
 
 var service = axios.create({
   timeout: 5000
@@ -14,7 +13,7 @@ var err = function (error) {
 
 service.interceptors.request.use((config) => {
   if (config.method === 'get') {
-    config.data = qs.stringify(config.data)
+    config.params = Object.assign({}, config.params, { t: Date.parse(new Date()) / 1000 })
   }
   return config
 }, err)

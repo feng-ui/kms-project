@@ -84,6 +84,7 @@
             </a-row>
             <a-row>
               <a-table :columns="columns"
+                       rowKey="id"
                        :loading="table.loading"
                        :dataSource="dataSource"
                        :pagination="pagination"
@@ -130,13 +131,14 @@
       dataIndex: 'status'
     },
     {
-      title: '在线状态'
+      title: '在线状态',
+      dataIndex: ''
     },
     {
       title: '操作',
       dataIndex: 'action'
     }]
-
+  const dataSource = []
   export default {
     name: '',
     data () {
@@ -175,7 +177,7 @@
           ok: '确认'
         },
         showModal: false,
-        dataSource: [],
+        dataSource,
         pagination: {},
         columns
       }
@@ -212,6 +214,7 @@
         getUserListApi(params).then(res => {
           self.table.loading = false
           console.log(res.data)
+          self.dataSource = res.data.data
         })
       }
     }

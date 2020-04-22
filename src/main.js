@@ -10,6 +10,7 @@ import axios from 'axios'
 import qs from 'qs'
 import './views/mock/userMock.js'
 import './views/mock/loginMock.js'
+import './views/mock/roleMock.js'
 
 Vue.use(Antd)
 Vue.use(echarts)

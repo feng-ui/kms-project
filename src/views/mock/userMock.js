@@ -6,7 +6,7 @@ const user = function () {
     var newData = {
       num: 1,
       username: 'user1',
-      roleName: 1,
+      roleName: 'admin',
       email: '223@qq.com',
       phoneNum: '13023423312',
       createTime: '2020-04-21',
