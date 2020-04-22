@@ -12,7 +12,7 @@
             <a-icon :type="item.icon"></a-icon>
             <span>{{item.title}}</span>
           </a-menu-item>
-          <a-sub-menu v-else :key="item.key" >
+          <a-sub-menu v-else :key="item.key">
             <span slot="title"><a-icon :type="item.icon"></a-icon><span>{{ item.title }}</span></span>
             <a-menu-item v-for="subItem in item.children" :key="subItem.key">
               <router-link :to="subItem.path">{{subItem.title}}</router-link>
@@ -28,6 +28,7 @@
                          style="background: #fff; padding: 0">
           <div class="header">
             <a-icon class="trigger" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click="toggle"></a-icon>
+            <span style="padding: 0% 15%">{{username}}</span>
           </div>
         </a-layout-header>
       </div>
@@ -43,6 +44,8 @@
 </template>
 
 <script>
+  import { getCookie } from '../cookie/cookie'
+
   export default {
     name: 'layout',
     data () {
@@ -52,6 +55,7 @@
         collapsed: false,
         rootSubmenuKeys: ['1', '2', '3'],
         openKeys: [],
+        username: '',
         menuList: [{
           key: '1',
           icon: 'cluster',
@@ -108,7 +112,13 @@
         } else {
           this.openKeys = latestOpenKey ? [latestOpenKey] : []
         }
+      },
+      getEchoUser() {
+        this.username = getCookie('username')
       }
+    },
+    mounted() {
+      this.getEchoUser()
     }
   }
 </script>

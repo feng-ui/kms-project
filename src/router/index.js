@@ -11,16 +11,25 @@ import use from '../views/system/user.vue'
 import role from '../views/system/role.vue'
 
 Vue.use(VueRouter)
+Vue.config.productionTip = false
 
 const routes = [
   {
     path: '/login',
-    component: Login
+    component: Login,
+    meta: {
+      title: 'login',
+      needLogin: true
+    }
   },
   {
     path: '/',
     component: menu,
     name: 'menu',
+    meta: {
+      title: '首页',
+      type: 'login'
+    },
     children: [{
       path: '/user',
       component: use
@@ -28,7 +37,7 @@ const routes = [
       path: '/role',
       component: role
     },
-     {
+      {
         path: '/echarts',
         component: echarts
       },

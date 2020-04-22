@@ -17,7 +17,7 @@
           </a-input>
         </a-form-item>
         <a-form-item class="btns">
-          <a-button type="primary" @click="handleLogin">登录</a-button>
+          <a-button type="primary" @click="handleLogin">{{'登录'}}</a-button>
         </a-form-item>
       </a-form>
     </div>
@@ -26,6 +26,7 @@
 <script>
   import { mapMutations } from 'vuex'
   import { getLoginApi } from '../views/axios/loginApi.js'
+  import { setCookie } from '../cookie/cookie'
 
   export default {
     data () {
@@ -46,6 +47,7 @@
         }
         if (this.loginForm.username === '' && this.loginForm.password === '') {
         } else {
+           setCookie('username', this.loginForm.username)
           getLoginApi(params).then(res => {
             console.log(res.data)
             self.$router.push('/')

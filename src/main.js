@@ -11,9 +11,11 @@ import qs from 'qs'
 import './views/mock/userMock.js'
 import './views/mock/loginMock.js'
 import './views/mock/roleMock.js'
+import VueCookies from 'vue-cookies'
 
 Vue.use(Antd)
 Vue.use(echarts)
+Vue.use(VueCookies)
 Vue.prototype.$axios = axios
 Vue.prototype.$qs = qs
 
