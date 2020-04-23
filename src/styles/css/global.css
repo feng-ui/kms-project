@@ -1,27 +1,195 @@
+/*布局样式*/
+body.colorWeak {
+    filter: invert(80%);
+}
+
+body.userLayout {
+    overflow: auto;
+}
+
 .layout {
     height: auto;
-    background: #f0f2f5;
     overflow-x: hidden;
 }
 
-#components-layout-demo-custom-trigger .trigger:hover {
-    color: #1890ff;
+.layout.ant-layout.ant-layout-has-sider {
+    flex-direction: row;
 }
 
-#components-layout-demo-custom-trigger .logo {
-    height: 32px;
-    margin: 16px;
+.layout.ant-layout .trigger {
+    font-size: 20px;
+    line-height: 64px;
+    padding: 0 24px;
+    cursor: pointer;
+    transition: color 0.3s;
 }
-.trigger {
-    height: 32px;
-    width: 52px;
+
+.layout.ant-layout .trigger:hover {
+    background: rgba(0, 0, 0, 0.025);
+}
+
+.layout.ant-layout .topmenu {
+    /* 必须为 topmenu  才能启用流式布局 */
+}
+.layout.ant-layout .topmenu .ant-header-fixedHeader {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 9;
+    width: 100%;
+    transition: width 0.2s;
+}
+.layout.ant-layout .topmenu .ant-header-fixedHeader.ant-header-side-opened {
+    width: 100%;
+}
+.layout.ant-layout .topmenu .ant-header-fixedHeader.ant-header-side-closed {
+    width: 100%;
+}
+.layout.ant-layout .topmenu.content-width-Fluid .header-index-wide {
+    max-width: unset;
+    margin-left: 24px;
+}
+.layout.ant-layout .topmenu.content-width-Fluid .page-header-index-wide {
+    max-width: unset;
+}
+.layout.ant-layout .sidemenu .ant-header-fixedHeader {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 9;
+    width: 100%;
+    transition: width 0.2s;
+}
+.layout.ant-layout .sidemenu .ant-header-fixedHeader.ant-header-side-opened {
+    width: calc(100% - 256px);
+}
+.layout.ant-layout .sidemenu .ant-header-fixedHeader.ant-header-side-closed {
+    width: calc(100% - 80px);
+}
+
+/*右边栏头部*/
+.layout.ant-layout .header {
+    height: 64px;
+    padding: 0 12px 0 0;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+    position: relative;
+}
+.layout.ant-layout .header .user-wrapper {
+    float: right;
+    height: 100%;
+    padding: 0px 36px 0px 12px;
+    display: inline-block;
+    transition: all 0.3s;
+    height: 100%;
+    color: rgba(0,0,0,0.65);
+    font-size: 16px;
+}
+
+.layout.ant-layout .top-nav-header-index {
+    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+    position: relative;
+    transition: background 0.3s, width 0.2s;
+}
+.layout.ant-layout .top-nav-header-index .header-index-wide {
+    max-width: 1200px;
+    margin: auto;
+    padding-left: 0;
+    display: flex;
+    height: 64px;
+}
+.layout.ant-layout .top-nav-header-index .header-index-wide .ant-menu.ant-menu-horizontal {
+    max-width: 835px;
+    flex: 0 1 835px;
+    border: none;
+    height: 64px;
+    line-height: 64px;
+}
+.layout.ant-layout .top-nav-header-index .header-index-wide .header-index-left {
+    flex: 0 1 1000px;
+    display: flex;
+}
+.layout.ant-layout .top-nav-header-index .header-index-wide .header-index-left .logo.top-nav-header {
+    flex: 0 0 165px;
+    width: 165px;
+    height: 64px;
+    position: relative;
+    line-height: 64px;
+    transition: all 0.3s;
+    overflow: hidden;
+}
+
+.layout.ant-layout .top-nav-header-index .header-index-wide .header-index-left .logo.top-nav-header img,
+.layout.ant-layout .top-nav-header-index .header-index-wide .header-index-left .logo.top-nav-header svg {
+    display: inline-block;
     vertical-align: middle;
+    height: 32px;
+    width: 32px;
 }
+.layout.ant-layout .top-nav-header-index .header-index-wide .header-index-left .logo.top-nav-header h1 {
+    color: #fff;
+    display: inline-block;
+    vertical-align: top;
+    font-size: 16px;
+    margin: 0 0 0 12px;
+    font-weight: 400;
+}
+.layout.ant-layout .top-nav-header-index .header-index-wide .header-index-right {
+    flex: 1 0 auto;
+    height: 64px;
+    overflow: hidden;
+}
+.layout.ant-layout .top-nav-header-index .header-index-wide .header-index-right .content-box {
+    float: right;
+}
+.layout.ant-layout .top-nav-header-index.light {
+    background-color: #fff;
+}
+.layout.ant-layout .top-nav-header-index.light .header-index-wide .header-index-left .logo h1 {
+    color: #002140;
+}
+.layout.ant-layout .layout-content {
+    margin: 24px 24px 0;
+    height: 100%;
+    padding: 0 12px 0 0;
+}
+.layout.ant-layout .ant-layout-footer {
+    padding: 0;
+}
+.topmenu .page-header-index-wide {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.ant-drawer.drawer-sider .sider {
+    box-shadow: none;
+}
+.ant-drawer.drawer-sider.dark .ant-drawer-content {
+    background-color: #001529;
+}
+.ant-drawer.drawer-sider.light {
+    box-shadow: none;
+}
+.ant-drawer.drawer-sider.light .ant-drawer-content {
+    background-color: #fff;
+}
+.ant-drawer.drawer-sider .ant-drawer-body {
+    padding: 0;
+}
+.layout.ant-layout .header {
+    height: 64px;
+    padding: 0 12px 0 0;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+    position: relative;
+}
+
 img {
     width: 52px;
     background-size: contain;
 }
+
 .h1 {
+    flex: 0 0 200px;
     color: #fff;
     font-size: 20px;
     margin: 15px 0px 10px 10px;
@@ -29,29 +197,29 @@ img {
     font-weight: 600;
     vertical-align: middle;
 }
+
 /*尾部样式*/
 .footer {
     color: rgba(0, 0, 0, 0.45);
     font-size: 14px;
     text-align: center;
 }
+
 /*头部样式*/
 .header-animat {
     position: relative;
     z-index: 2;
 }
-.header {
-    height: 64px;
-    background: #fff;
-    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
-    position: relative;
-}
+/**/
+
+
 /*侧边栏*/
 .sider {
     box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
     position: relative;
     z-index: 10;
     min-height: 100vh;
+    overflow: auto;
 }
 
 /*右边栏中部样式*/

@@ -22,7 +22,6 @@
               <a-form-item
                 :label-col="formItemLayout.labelCol"
                 :wrapper-col="formItemLayout.wrapperCol"
-
                 :label="system.rolename">
                 <a-input :allow-clear="true"></a-input>
               </a-form-item>
@@ -45,11 +44,17 @@
         </div>
         <a-table
           :columns="columns"
-          rowKey = "(record,id) => id"
-        :dataSource="dataSource">
-        <span slot="action" slotScope="text,record">
-            <a href="javascript:" @click="handleEdit()">{{system.edit}}</a>
+          rowKey="(record,id) => id"
+          :dataSource="dataSource">
+        <span slot="action" slot-scope="text,record">
+            <a href="javascript:" @click="handleEdit(record.id)">{{system.edit}}</a>
+          <role-edit @hidden="hiddenShow" v-if="roleEditShow"> </role-edit>
           </span>
+          <a href="javascript:"
+             @click="setKeyStatus(record)">
+            {{(record === system.start)?('system.stop'):('system.start')}}
+          </a>
+          <a-divider type="vertical"></a-divider>
         </a-table>
         <div class="ant-table-pagination">
           <a-pagination :defaultCurrent="6" :total="500"/>
@@ -61,6 +66,7 @@
 
 <script>
   import { getRoleListApi } from '../axios/roleApi.js'
+  import roleEdit from '../system/modal/role/edit.vue'
 
   const columns = [
     {
@@ -112,8 +118,12 @@
     }]
   export default {
     name: '',
+    component: {
+      roleEdit
+    },
     data () {
       return {
+        roleEditShow: false,
         form: this.$form.createForm(this),
         visible: false,
         showModal: false,
@@ -148,6 +158,10 @@
       }
     },
     watch: {
+      hiddenShow () {
+        var self = this
+        self.roleEditShow = true
+      },
       checkedKeys (val) {
         console.log('onCheck', val)
       }
@@ -182,6 +196,9 @@
       },
       handleEdit (id) {
         alert(123)
+      },
+      setKeyStatus () {
+
       }
     }
   }

@@ -28,7 +28,9 @@
                          style="background: #fff; padding: 0">
           <div class="header">
             <a-icon class="trigger" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click="toggle"></a-icon>
-            <span style="padding: 0% 15%">{{username}}</span>
+            <div class="user-wrapper">
+            <span class="action ant-dropdown-link user-dropdown-menu">{{username}}</span>
+            </div>
           </div>
         </a-layout-header>
       </div>
@@ -82,7 +84,6 @@
               key: '2.1',
               title: '柱状图',
               path: '../echarts'
-
             },
             {
               key: '2.2',
@@ -93,6 +94,21 @@
               key: '2.3',
               title: '饼状图',
               path: '../chartPie'
+            },
+            {
+              key: '2.4',
+              title: '动态数据',
+              path: '../dynamicData'
+            },
+            {
+              key: '2.5',
+              title: '温度变化图',
+              path: '../temperatureChange'
+            },
+            {
+              key: '2.6',
+              title: '电量变化图',
+              path: '../electricSum'
             }
           ]
         }]

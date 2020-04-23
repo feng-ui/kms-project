@@ -11,6 +11,7 @@ import qs from 'qs'
 import './views/mock/userMock.js'
 import './views/mock/loginMock.js'
 import './views/mock/roleMock.js'
+import './views/system/modal/user/uEdit.vue'
 import VueCookies from 'vue-cookies'
 
 Vue.use(Antd)

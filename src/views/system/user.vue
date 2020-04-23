@@ -88,7 +88,13 @@
                        :loading="table.loading"
                        :dataSource="dataSource"
                        :pagination="pagination"
-                       @change="handleTableChange"></a-table>
+                       @change="handleTableChange">
+                <span slot="action" slot-scope="text,record">
+                                    <a href="javascript:" @click="editShow(record.id)">{{system.edit}}</a>
+                                    <a-divider type="vertical"></a-divider>
+                  <uEdit ref="edit" v-if="userEditShow"> </uEdit>
+                </span>
+              </a-table>
             </a-row>
 
           </a-form>
@@ -100,6 +106,7 @@
 
 <script>
   import { getUserListApi } from '../axios/useApi.js'
+  import uEdit from './modal/user/uEdit.vue'
 
   const columns = [{
     title: '编号',
@@ -136,13 +143,23 @@
     },
     {
       title: '操作',
-      dataIndex: 'action'
+      dataIndex: 'action',
+      scopedSlots: { customRender: 'action' }
     }]
   const dataSource = []
+  for (var i = 0; i < 20; i++) {
+    dataSource.push({
+      key: i
+    })
+  }
   export default {
     name: '',
+    components: {
+      uEdit
+    },
     data () {
       return {
+        userEditShow: false,
         formItemLayout: {
           labelCol: {
             sm: 10,
@@ -174,7 +191,8 @@
           add: '添加',
           addAdmin: '添加管理员',
           cancel: '取消',
-          ok: '确认'
+          ok: '确认',
+          edit: '编辑'
         },
         showModal: false,
         dataSource,
@@ -186,6 +204,10 @@
       this.loadData()
     },
     methods: {
+      editShow () {
+        alert(123)
+        this.userEditShow = true
+      },
       addShow () {
         this.visible = true
       },

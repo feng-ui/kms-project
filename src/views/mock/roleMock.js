@@ -5,7 +5,7 @@ const role = function () {
   for (var i = 0; i < 20; i++) {
     var newData = {
       num: 1,
-      rolename: 1
+      rolename: 'admin'
     }
     dataList.push(newData)
   }

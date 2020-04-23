@@ -7,6 +7,7 @@ import lineAndBar from '../components/echarts/lineAndBar.vue'
 import chartPie from '../components/echarts/chartPie.vue'
 import chartLineChange from '../components/echarts/dynamicData.vue'
 import temperatureChange from '../components/echarts/temperatureChange.vue'
+import electricSum from '../components/echarts/electricSum.vue'
 import use from '../views/system/user.vue'
 import role from '../views/system/role.vue'
 
@@ -28,7 +29,7 @@ const routes = [
     name: 'menu',
     meta: {
       title: '首页',
-      type: 'login'
+      type: 'menu'
     },
     children: [{
       path: '/user',
@@ -48,17 +49,20 @@ const routes = [
       {
         path: '/chartPie',
         component: chartPie
+      },
+      {
+        path: '/dynamicData',
+        component: chartLineChange
+      },
+      {
+        path: '/temperatureChange',
+        component: temperatureChange
+      },
+      {
+        path: '/electricSum',
+        component: electricSum
       }
     ]
-  },
-
-  {
-    path: '/lineChange',
-    component: chartLineChange
-  },
-  {
-    path: '/temperatureChange',
-    component: temperatureChange
   }
 ]
 const router = new VueRouter({
