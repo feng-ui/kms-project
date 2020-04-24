@@ -1,17 +1,6 @@
 <template>
   <uEdit>
-    <a-modal
-      v-model="edit.visible"
-      :title="system.edit"
-      :destroy-on-close="true"
-      :after-close="afterClose">
-      <template slot="footer">
-        <a-button key="back" @click="handleCancel()">{{'system.cancel'}}</a-button>
-        <a-button key="submit" type="primary" :loading="edit.loading" @click="editSubmit">
-          {{'system.submit'}}
-        </a-button>
-      </template>
-    </a-modal>
+
   </uEdit>
 </template>
 

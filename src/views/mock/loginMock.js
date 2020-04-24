@@ -2,7 +2,7 @@ import Mock from 'mockjs'
 
 const login = function () {
   var loginForm = {
-    username: 'admin123',
+    username: 'admin',
     password: '123456'
   }
   return {

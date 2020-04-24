@@ -13,13 +13,14 @@
       <a-card :bordered="false">
         <div class="add-bottom-space">
           <a-button type="primary" @click="addShow()">{{system.add}}</a-button>
-          <a-modal :title="system.addRole" v-model="visible" :destroy-on-close="true">
+          <a-modal :title="system.addRole" v-model="add.visible" :maskClosable="false" :afterClose="afterClose">
             <template slot="footer">
               <a-button key="back" @click="handleCancel">{{system.cancel}}</a-button>
-              <a-button key="submit" type="primary" @click="handleSubmit">{{system.submit}}</a-button>
+              <a-button key="submit" type="primary" @click="handleAddRole">{{system.submit}}</a-button>
             </template>
-            <a-form :form="form">
+            <a-form :form="add.form">
               <a-form-item
+                :required="true"
                 :label-col="formItemLayout.labelCol"
                 :wrapper-col="formItemLayout.wrapperCol"
                 :label="system.rolename">
@@ -44,29 +45,55 @@
         </div>
         <a-table
           :columns="columns"
-          rowKey="(record,id) => id"
+          rowKey="id"
           :dataSource="dataSource">
         <span slot="action" slot-scope="text,record">
-            <a href="javascript:" @click="handleEdit(record.id)">{{system.edit}}</a>
-          <role-edit @hidden="hiddenShow" v-if="roleEditShow"> </role-edit>
-          </span>
-          <a href="javascript:"
-             @click="setKeyStatus(record)">
-            {{(record === system.start)?('system.stop'):('system.start')}}
-          </a>
+            <a href="javascript:" @click="handleEditShow(record)">{{system.edit}}</a>
           <a-divider type="vertical"></a-divider>
+          <a href="javascript:" @click="confirm(record.id)">{{system.delete}}</a>
+          </span>
         </a-table>
-        <div class="ant-table-pagination">
-          <a-pagination :defaultCurrent="6" :total="500"/>
-        </div>
+        <a-modal
+          v-model="edit.visible"
+          :title="system.edit"
+          :destroy-on-close="true"
+          :after-close="afterClose">
+          <template slot="footer">
+            <a-button key="back" @click="handleCancel()">{{system.cancel}}</a-button>
+            <a-button key="submit" type="primary" :loading="edit.loading" @click="editSubmit">
+              {{system.submit}}
+            </a-button>
+          </template>
+          <a-form :form="edit.form">
+            <a-form-item
+              :required="true"
+              :label-col="formItemLayout.labelCol"
+              :wrapper-col="formItemLayout.wrapperCol"
+              :label="system.account">
+              <a-input :disabled="true"
+                       v-decorator="['account']">
+              </a-input>
+            </a-form-item>
+            <a-form-item
+              :required="true"
+              :label-col="formItemLayout.labelCol"
+              :wrapper-col="formItemLayout.wrapperCol"
+              :label="system.auth">
+              <a-tree
+                checkable
+                @check="onCheck"
+                :tree-data="treeData">
+              </a-tree>
+            </a-form-item>
+          </a-form>
+        </a-modal>
       </a-card>
     </div>
   </a-layout>
 </template>
 
 <script>
-  import { getRoleListApi } from '../axios/roleApi.js'
-  import roleEdit from '../system/modal/role/edit.vue'
+  import { getRoleListApi, roleAddApi, delectRoleApi } from '../axios/roleApi.js'
 
   const columns = [
     {
@@ -118,11 +145,18 @@
     }]
   export default {
     name: '',
-    component: {
-      roleEdit
-    },
     data () {
       return {
+        add: {
+          form: this.$form.createForm(this),
+          visible: false,
+          loading: false
+        },
+        edit: {
+          form: this.$form.createForm(this),
+          visible: false,
+          loading: false
+        },
         roleEditShow: false,
         form: this.$form.createForm(this),
         visible: false,
@@ -153,15 +187,14 @@
           submit: '提交',
           permission: '角色权限',
           rolename: '角色名称',
-          edit: '编辑'
+          edit: '编辑',
+          delete: '删除',
+          auth: '权限管理',
+          account: '角色名称'
         }
       }
     },
     watch: {
-      hiddenShow () {
-        var self = this
-        self.roleEditShow = true
-      },
       checkedKeys (val) {
         console.log('onCheck', val)
       }
@@ -177,14 +210,33 @@
           self.dataSource = res.data.data
         })
       },
-      addShow () {
-        this.visible = true
+      confirm () {
+        this.$confirm({
+          title: '确认删除这条数据',
+          okText: '确认',
+          cancelText: '取消',
+
+          onOk () {
+            console.log('确认')
+            delectRoleApi().then(res => {
+
+            })
+          },
+          onCancel () {
+            console.log('Cancel')
+          }
+        })
       },
-      handleCancel () {
-        this.visible = false
-      },
-      handleSubmit () {
+      handleAddRole () {
         alert(123)
+        roleAddApi()
+      },
+      handleEditShow () {
+        alert(123)
+        this.edit.visible = true
+      },
+      editSubmit () {
+        alert(111)
       },
       onCheck (checkedKeys) {
         console.log('onCheck', checkedKeys)
@@ -194,11 +246,15 @@
         console.log('onSelect', info)
         this.selectedKeys = selectedKeys
       },
-      handleEdit (id) {
-        alert(123)
+      addShow () {
+        this.add.visible = true
       },
-      setKeyStatus () {
-
+      handleCancel () {
+        this.add.visible = false
+        this.edit.visible = false
+      },
+      afterClose () {
+        this.add.visible && (this.add.form.resetFields())
       }
     }
   }
