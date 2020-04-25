@@ -7,7 +7,6 @@ var service = axios.create({
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
 
 var err = function (error) {
-  console.log('错误的传参')
   return Promise.reject(error)
 }
 

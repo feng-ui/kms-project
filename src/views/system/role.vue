@@ -71,7 +71,7 @@
               :wrapper-col="formItemLayout.wrapperCol"
               :label="system.account">
               <a-input :disabled="true"
-                       v-decorator="['account']">
+                       v-decorator="['role']">
               </a-input>
             </a-form-item>
             <a-form-item
@@ -93,7 +93,7 @@
 </template>
 
 <script>
-  import { getRoleListApi, roleAddApi, delectRoleApi } from '../axios/roleApi.js'
+  import { getRoleListApi, roleAddApi, delectRoleApi, editShowApi, editSubmitApi } from '../axios/roleApi.js'
 
   const columns = [
     {
@@ -154,6 +154,7 @@
         },
         edit: {
           form: this.$form.createForm(this),
+          id: '',
           visible: false,
           loading: false
         },
@@ -232,11 +233,34 @@
         roleAddApi()
       },
       handleEditShow () {
-        alert(123)
-        this.edit.visible = true
+        var self = this
+        self.edit.visible = true
+        editShowApi('123').then(function (res) {
+          console.log(res.data)
+          var result = res.data.data
+          self.edit.visible = true
+          self.$nextTick(function () {
+            self.edit.form.setFieldsValue({
+              role: result.role
+            })
+          })
+        })
       },
       editSubmit () {
-        alert(111)
+        this.edit.loading = true
+        var self = this
+        var params = {
+          id: this.edit.id
+        }
+        this.edit.form.validateFields(function (err, values) {
+          self.edit.loading = false
+          if (!err) {
+            params = Object.assign({}, values, params)
+            editSubmitApi(params).then(function (res) {
+              console.log(147)
+            })
+          }
+        })
       },
       onCheck (checkedKeys) {
         console.log('onCheck', checkedKeys)
@@ -248,6 +272,16 @@
       },
       addShow () {
         this.add.visible = true
+        roleAddApi().then(function (res) {
+          console.log(res.data)
+          var result = res.data
+          self.edit.visible = true
+          self.$nextTick(function () {
+            self.edit.form.setFieldsValue({
+              rolename: result.rolename
+            })
+          })
+        })
       },
       handleCancel () {
         this.add.visible = false

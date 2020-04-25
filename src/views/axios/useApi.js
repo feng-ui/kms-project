@@ -17,7 +17,7 @@ export const userAddApi = (params) => {
 
 export const editSubmitApi = (params) => {
   return service({
-    url: 'system/editUser',
+    url: '/system/editUser',
     method: 'post',
     data: params
   })
@@ -25,7 +25,7 @@ export const editSubmitApi = (params) => {
 
 export const editShowApi = (params) => {
   return service({
-    url: 'system/editShow',
+    url: '/system/editShow',
     method: 'post',
     data: params
   })

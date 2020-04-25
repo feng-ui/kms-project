@@ -13,8 +13,19 @@ const role = function () {
     data: dataList
   }
 }
+const roleEdit = function () {
+  var newData = {
+    role: 'admin'
+  }
+  return {
+    data: newData
+  }
+}
+
 const data = Mock.mock(/\/system\/getRoleList/, 'post', role)
+const edit = Mock.mock(/\/system\/editShowApi/, 'post', roleEdit)
 
 export {
-  data
+  data,
+  edit
 }

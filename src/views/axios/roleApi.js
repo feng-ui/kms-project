@@ -17,7 +17,7 @@ export const roleAddApi = (params) => {
 
 export const editSubmitApi = (params) => {
   return service({
-    url: 'system/editRole',
+    url: '/system/editRole',
     method: 'post',
     data: params
   })
@@ -25,14 +25,14 @@ export const editSubmitApi = (params) => {
 
 export const editShowApi = (params) => {
   return service({
-    url: 'system/editShow',
+    url: '/system/editShow',
     method: 'post',
     data: params
   })
 }
 export const delectRoleApi = (params) => {
   return service({
-    url: 'system/deleteRole',
+    url: '/system/deleteRole',
     method: 'post',
     data: params
   })

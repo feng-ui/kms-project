@@ -98,9 +98,6 @@
                    :dataSource="dataSource"
                    :pagination="pagination"
                    @change="handleTableChange">
-            <span slot="status" slot-scope="text,record">
-                                {{statusList[text]}}
-                            </span>
             <span slot="action" slot-scope="text,record">
                  <a href="javascript:" @click="editShow(record.id)">{{system.edit}}</a>
               <a-divider type="vertical"></a-divider>
@@ -141,7 +138,7 @@
                 :wrapper-col="formItemLayout.wrapperCol"
                 :label="system.account">
                 <a-input :disabled="true"
-                         v-decorator="['account']">
+                         v-decorator="['username']">
                 </a-input>
               </a-form-item>
               <a-form-item
@@ -169,7 +166,7 @@
                 :wrapper-col="formItemLayout.wrapperCol"
                 :label="system.mobile">
                 <a-input
-                  v-decorator="['mobile']">
+                  v-decorator="['phoneNum']">
                 </a-input>
               </a-form-item>
             </a-form>
@@ -287,22 +284,35 @@
       editShow () {
         var self = this
         self.edit.visible = true
-        editShowApi().then(function (res) {
+        editShowApi('123').then(function (res) {
           console.log(res.data)
-          var result = res.data
+          var result = res.data.data
           self.edit.visible = true
           self.$nextTick(function () {
             self.edit.form.setFieldsValue({
-              userName: result.userName,
+              username: result.username,
               email: result.email,
               phoneNum: result.phoneNum,
-              roleId: result.roleId
+              role: result.role
             })
           })
         })
       },
       handelUserEdit () {
-        editSubmitApi()
+        this.edit.loading = true
+        var self = this
+        var params = {
+          id: this.edit.id
+        }
+        this.edit.form.validateFields(function (err, values) {
+          self.edit.loading = false
+          if (!err) {
+            params = Object.assign({}, values, params)
+            editSubmitApi(params).then(function (res) {
+              console.log(147)
+            })
+          }
+        })
       },
       handleUserAdd (e) {
         this.add.loading = true
