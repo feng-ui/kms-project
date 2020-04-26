@@ -5,32 +5,31 @@
         <img src="../assets/logo.png" alt="">
       </div>
       <!--登录表单区域-->
-      <a-form class="login_form" v-model="loginForm">
+      <a-form class="login_form" :form="form">
         <a-form-item>
           <a-input v-model="loginForm.username">
             <a-icon slot="prefix" type="user" style="color: rgba(0,0,0,.25)"/>
           </a-input>
         </a-form-item>
         <a-form-item>
-          <a-input v-model="loginForm.password" type="password">
+          <a-input type="password" v-decorator="['password']">
             <a-icon slot="prefix" type="lock" style="color: rgba(0,0,0,.25)"/>
           </a-input>
         </a-form-item>
         <a-form-item class="btns">
-          <a-button type="primary" @click="handleLogin">{{'登录'}}</a-button>
+          <a-button size="large" type="primary" @click="handleLogin">{{'登录'}}</a-button>
         </a-form-item>
       </a-form>
     </div>
   </div>
 </template>
 <script>
-  import { mapMutations } from 'vuex'
   import { getLoginApi } from '../views/axios/loginApi.js'
-  import { setCookie } from '../cookie/cookie'
 
   export default {
     data () {
       return {
+        form: this.$form.createForm(this),
         loginForm: {
           username: 'admin',
           password: '123456'
@@ -38,22 +37,25 @@
       }
     },
     methods: {
-      ...mapMutations(['changeLogin']),
-      handleLogin () {
+      handleLogin: function () {
         var self = this
-        var params = {
-          username: '',
-          password: ''
-        }
-        if (this.loginForm.username === '' && this.loginForm.password === '') {
-        } else {
-           setCookie('username', this.loginForm.username)
-          getLoginApi(params).then(res => {
-            console.log(res.data)
-            self.$router.push('/')
-            alert('登陆成功')
-          })
-        }
+        this.form.validateFields(function (err, values) {
+          if (!err) {
+            getLoginApi(values).then(res => {
+              var result = res.data.data
+              console.log(result.username)
+              localStorage.setItem('userInfo', JSON.stringify(res.data.data))
+              self.$notification.success({
+                  message: '登录成功',
+                  duration: 1,
+                  onClose: function () {
+                    self.$router.push('/')
+                  }
+                }
+              )
+            })
+          }
+        })
       }
     }
   }

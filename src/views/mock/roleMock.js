@@ -3,7 +3,10 @@ import Mock from 'mockjs'
 const role = function () {
   var dataList = []
   for (var i = 0; i < 20; i++) {
+    var t = i
     var newData = {
+      id: t,
+      key: 0,
       num: 1,
       rolename: 'admin'
     }

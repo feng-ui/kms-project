@@ -21,6 +21,7 @@ Vue.prototype.$axios = axios
 Vue.prototype.$qs = qs
 
 Vue.config.productionTip = false
+
 new Vue({
   router,
   store,

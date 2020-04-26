@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Login from '../components/login.vue'
 import menu from '../components/menu.vue'
 import echarts from '../components/echarts/echarts.vue'
 import lineAndBar from '../components/echarts/lineAndBar.vue'
@@ -17,11 +16,7 @@ Vue.config.productionTip = false
 const routes = [
   {
     path: '/login',
-    component: Login,
-    meta: {
-      title: 'login',
-      needLogin: true
-    }
+    component: resolve => require(['../components/login.vue'], resolve)
   },
   {
     path: '/',
@@ -29,7 +24,8 @@ const routes = [
     name: 'menu',
     meta: {
       title: '首页',
-      type: 'menu'
+      type: 'menu',
+      requireAuth: true
     },
     children: [{
       path: '/user',
@@ -68,6 +64,13 @@ const routes = [
 const router = new VueRouter({
   mode: 'history',
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.path === '/login') return next()
+  const tokenStr = window.localStorage.getItem('userInfo')
+  if (!tokenStr) return next('/login')
+  next()
 })
 
 export default router

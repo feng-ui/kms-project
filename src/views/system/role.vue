@@ -47,7 +47,7 @@
           :columns="columns"
           rowKey="id"
           :dataSource="dataSource">
-        <span slot="action" slot-scope="text,record">
+          <span slot="action" slot-scope="text,record">
             <a href="javascript:" @click="handleEditShow(record)">{{system.edit}}</a>
           <a-divider type="vertical"></a-divider>
           <a href="javascript:" @click="confirm(record.id)">{{system.delete}}</a>
@@ -67,6 +67,7 @@
           <a-form :form="edit.form">
             <a-form-item
               :required="true"
+              rowKey="id"
               :label-col="formItemLayout.labelCol"
               :wrapper-col="formItemLayout.wrapperCol"
               :label="system.account">
@@ -230,7 +231,15 @@
       },
       handleAddRole () {
         alert(123)
-        roleAddApi()
+        var self = this
+        this.add.loading = true
+        this.add.form.validateFields(function (err, values) {
+          if (!err) {
+            roleAddApi(values).then(function (res) {
+              self.add.loading = false
+            })
+          }
+        })
       },
       handleEditShow () {
         var self = this
@@ -272,16 +281,6 @@
       },
       addShow () {
         this.add.visible = true
-        roleAddApi().then(function (res) {
-          console.log(res.data)
-          var result = res.data
-          self.edit.visible = true
-          self.$nextTick(function () {
-            self.edit.form.setFieldsValue({
-              rolename: result.rolename
-            })
-          })
-        })
       },
       handleCancel () {
         this.add.visible = false

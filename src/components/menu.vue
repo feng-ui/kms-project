@@ -46,8 +46,6 @@
 </template>
 
 <script>
-  import { getCookie } from '../cookie/cookie'
-
   export default {
     name: 'layout',
     data () {
@@ -57,6 +55,7 @@
         collapsed: false,
         rootSubmenuKeys: ['1', '2', '3'],
         openKeys: [],
+        userInfo: {},
         username: '',
         menuList: [{
           key: '1',
@@ -130,7 +129,7 @@
         }
       },
       getEchoUser() {
-        this.username = getCookie('username')
+        this.username = JSON.parse(localStorage.getItem('userInfo')).username
       }
     },
     mounted() {

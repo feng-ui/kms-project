@@ -21,7 +21,7 @@
             :afterClose="afterClose">
             <template slot="footer">
               <a-button key="back" @click="handleCancel()">{{system.cancel}}</a-button>
-              <a-button key="submit" type="primary" :loading="add.loading" @click="handleUserAdd()">
+              <a-button key="submit" type="primary"  @click="handleUserAdd()">
                 {{system.submit}}
               </a-button>
             </template>
@@ -316,7 +316,6 @@
       },
       handleUserAdd (e) {
         this.add.loading = true
-        var self = true
         this.add.form.validateFields(function (err, values) {
           if (!err) {
             userAddApi(values).then(res => {
@@ -327,16 +326,9 @@
       },
 
       handleTableChange (pagination, filters, sorter) {
-        console.log(pagination)
-        const pager = { ...this.pagination }
-        pager.current = pagination.current
-        this.pagination = pager
-        this.fetch({
-          results: pagination.pageSize,
-          page: pagination.current,
-          sortField: sorter.field,
-          sortOrder: sorter.order,
-          ...filters
+        var self = this
+        this.updatePage(pagination, function () {
+          self.loadData()
         })
       },
       loadData (params) {
