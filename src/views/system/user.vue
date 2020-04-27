@@ -178,6 +178,7 @@
 
 <script>
   import { getUserListApi, userAddApi, editShowApi, editSubmitApi } from '../axios/useApi.js'
+  import { requestFailed, requestSucceed } from '../utils/mixins'
 
   const columns = [{
     title: '编号',
@@ -409,12 +410,17 @@
         })
       },
       handleUserAdd () {
-        alert(147852)
+        var self = this
         this.add.loading = true
         this.add.form.validateFields(function (err, values) {
           if (!err) {
             userAddApi(values).then(res => {
               self.add.loading = false
+              requestSucceed('请求成功')
+            }).catch(err => {
+              self.add.loading = false
+              console.error(err)
+              requestFailed()
             })
           } else {
             self.add.loading = false
@@ -438,7 +444,7 @@
         })
       },
       handleInitPassword: function (rule, value, callback) {
-          callback(new Error('密码不能和用户名相同'))
+        callback()
       },
       handleConfirmPassword (rule, value, callback) {
         var { getFieldValue } = this.add.form

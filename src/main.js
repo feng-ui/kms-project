@@ -13,12 +13,15 @@ import './views/mock/loginMock.js'
 import './views/mock/roleMock.js'
 import './views/system/modal/user/uEdit.vue'
 import VueCookies from 'vue-cookies'
+import 'jquery'
+import './views/utils/mixins.js'
 
 Vue.use(Antd)
 Vue.use(echarts)
 Vue.use(VueCookies)
 Vue.prototype.$axios = axios
 Vue.prototype.$qs = qs
+Vue.prototype.$notification = Antd
 
 Vue.config.productionTip = false
 
