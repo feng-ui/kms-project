@@ -9,7 +9,7 @@ export const getRoleListApi = (params) => {
 }
 export const roleAddApi = (params) => {
   return service({
-    url: 'system/roleAdd',
+    url: '/system/roleAdd',
     method: 'post',
     data: params
   })

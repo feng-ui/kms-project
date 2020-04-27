@@ -9,7 +9,7 @@ export const getUserListApi = (params) => {
 }
 export const userAddApi = (params) => {
   return service({
-    url: 'system/addUser',
+    url: '/system/addUser',
     method: 'post',
     data: params
   })

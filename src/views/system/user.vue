@@ -16,7 +16,7 @@
           <a-modal
             :title="system.addAdmin"
             v-model="add.visible"
-            :loading="add.loading"
+            :destroy-on-close="true"
             :maskClosable="false"
             :afterClose="afterClose">
             <template slot="footer">
@@ -124,6 +124,7 @@
             v-model="edit.visible"
             :title="system.edit"
             :destroy-on-close="true"
+            :mask-closable="false"
             :afterClose="afterClose">
             <template slot="footer">
               <a-button key="back" @click="handleCancel()">{{system.cancel}}</a-button>
@@ -136,8 +137,7 @@
                 :label-col="formItemLayout.labelCol"
                 :wrapper-col="formItemLayout.wrapperCol"
                 :label="system.account">
-                <a-input :disabled="true"
-                         v-decorator="['username']">
+                <a-input v-decorator="formData.username.decorator">
                 </a-input>
               </a-form-item>
               <a-form-item
@@ -146,7 +146,7 @@
                 :label="system.role">
                 <a-select
                   :allow-clear="true"
-                  v-decorator="['role']">
+                  v-decorator="formData.role.decorator">
                   <a-select-option v-for="(item) in roleList" :value="item" :key="item">
                     {{item}}
                   </a-select-option>
@@ -157,7 +157,7 @@
                 :wrapper-col="formItemLayout.wrapperCol"
                 :label="system.email">
                 <a-input
-                  v-decorator="['email']">
+                  v-decorator="formData.email.decorator">
                 </a-input>
               </a-form-item>
               <a-form-item
@@ -165,7 +165,7 @@
                 :wrapper-col="formItemLayout.wrapperCol"
                 :label="system.mobile">
                 <a-input
-                  v-decorator="['phoneNum']">
+                  v-decorator="formData.mobile.decorator">
                 </a-input>
               </a-form-item>
             </a-form>
@@ -251,6 +251,7 @@
         formData: {
           username: {
             decorator: ['username', {
+              validateFirst: true,
               rules: [
                 {
                   required: true,
@@ -258,7 +259,7 @@
                 },
                 {
                   pattern: '^[0-9a-zA-Z]*$',
-                  message: '请输入正确格式的账号（6~16字母、数字组合'
+                  message: '请输入正确格式的账号（6~16字母、数字组合)'
                 },
                 {
                   min: 6,
@@ -274,6 +275,7 @@
           },
           role: {
             decorator: ['role', {
+              validateFirst: true,
               rules: [
                 {
                   required: true,
@@ -284,6 +286,7 @@
           },
           email: {
             decorator: ['email', {
+              validateFirst: true,
               rules: [
                 {
                   required: true,
@@ -302,6 +305,7 @@
           },
           mobile: {
             decorator: ['mobile', {
+              validateFirst: true,
               rules: [
                 {
                   pattern: '^(0|[1-9][0-9]*)$',
@@ -316,15 +320,21 @@
           },
           password: {
             decorator: ['password', {
+              validateFirst: true,
               rules: [
                 {
-                  pattern: '(?![0-9]+$)(?![a-z]+$)(?![A-Z]+$)(?!([^(0-9a-zA-Z)])+$).{8,}$',
+                  required: true,
                   message: '请输入密码'
+                },
+                {
+                  pattern: '(?![0-9]+$)(?![a-z]+$)(?![A-Z]+$)(?!([^(0-9a-zA-Z)])+$).{8,}$',
+                  message: '请输入正确格式的密码（数字、大小写字母、特殊字符至少两种组合，8-32位）'
                 },
                 {
                   max: 32,
                   message: '最多输入32位字符'
-                }
+                },
+                { validator: this.handleInitPassword }
               ]
             }]
           },
@@ -382,7 +392,7 @@
           })
         })
       },
-      handelUserEdit () {
+      handelUserEdit: function () {
         this.edit.loading = true
         var self = this
         var params = {
@@ -398,13 +408,16 @@
           }
         })
       },
-      handleUserAdd (e) {
+      handleUserAdd () {
+        alert(147852)
         this.add.loading = true
         this.add.form.validateFields(function (err, values) {
           if (!err) {
             userAddApi(values).then(res => {
               self.add.loading = false
             })
+          } else {
+            self.add.loading = false
           }
         })
       },
@@ -424,13 +437,26 @@
           self.dataSource = res.data.data
         })
       },
+      handleInitPassword: function (rule, value, callback) {
+          callback(new Error('密码不能和用户名相同'))
+      },
+      handleConfirmPassword (rule, value, callback) {
+        var { getFieldValue } = this.add.form
+        if (value === undefined || value === '') {
+          callback(new Error('请输入密码'))
+        } else if (value !== getFieldValue('password')) {
+          callback(new Error('新密码应与旧密码保存一致'))
+        } else {
+          callback()
+        }
+      },
       addShow: function () {
         this.add.visible = true
       },
       afterClose: function () {
         this.add.visible && (this.add.form.resetFields())
       },
-      handleCancel (e) {
+      handleCancel () {
         this.add.visible = false
         this.edit.visible = false
       }
