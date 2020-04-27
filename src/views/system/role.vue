@@ -24,7 +24,7 @@
                 :label-col="formItemLayout.labelCol"
                 :wrapper-col="formItemLayout.wrapperCol"
                 :label="system.rolename">
-                <a-input :allow-clear="true"></a-input>
+                <a-input :allow-clear="true"  v-decorator="formData.role.decorator"></a-input>
               </a-form-item>
               <a-form-item
                 :required="true"
@@ -71,8 +71,7 @@
               :label-col="formItemLayout.labelCol"
               :wrapper-col="formItemLayout.wrapperCol"
               :label="system.account">
-              <a-input :disabled="true"
-                       v-decorator="['role']">
+              <a-input :disabled="true">
               </a-input>
             </a-form-item>
             <a-form-item
@@ -178,6 +177,23 @@
           wrapperCol: {
             sm: 14,
             md: 19
+          }
+        },
+        formData: {
+          role: {
+            decorator: ['role', {
+              rules: [
+                {
+                  required: true,
+                  message: '请输入角色名称'
+                },
+                {
+                  pattern: '^[0-9a-zA-Z]*$',
+                  message: '请输入正确格式的角色名称'
+                }
+              ]
+            }
+            ]
           }
         },
         system: {

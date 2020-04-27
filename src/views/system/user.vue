@@ -21,25 +21,24 @@
             :afterClose="afterClose">
             <template slot="footer">
               <a-button key="back" @click="handleCancel()">{{system.cancel}}</a-button>
-              <a-button key="submit" type="primary"  @click="handleUserAdd()">
+              <a-button key="submit" type="primary" @click="handleUserAdd()">
                 {{system.submit}}
               </a-button>
             </template>
             <a-form :form="add.form">
               <a-row>
-                <a-form-item :required="true" :label-col="formItemLayout.labelCol"
+                <a-form-item :label-col="formItemLayout.labelCol"
                              :wrapper-col="formItemLayout.wrapperCol"
                              :label="system.account">
-                  <a-input v-decorator="['account']"></a-input>
+                  <a-input v-decorator="formData.username.decorator"></a-input>
                 </a-form-item>
                 <a-form-item
-                  :required="true"
                   :label-col="formItemLayout.labelCol"
                   :wrapper-col="formItemLayout.wrapperCol"
                   :label="system.role">
                   <a-select
                     :allow-clear="true"
-                    v-decorator="['role']"
+                    v-decorator="formData.role.decorator"
                     style="width:100%;">
                     <a-select-option v-for="item in roleList" :value="item" :key="item">
                       {{item}}
@@ -52,7 +51,7 @@
                   :wrapper-col="formItemLayout.wrapperCol"
                   :label="system.email">
                   <a-input
-                    v-decorator="['email']">
+                    v-decorator="formData.email.decorator">
                   </a-input>
                 </a-form-item>
                 <a-form-item
@@ -61,7 +60,7 @@
                   :wrapper-col="formItemLayout.wrapperCol"
                   :label="system.password">
                   <a-input-password
-                    v-decorator="['password']">
+                    v-decorator="formData.password.decorator">
                   </a-input-password>
                 </a-form-item>
                 <a-form-item
@@ -69,7 +68,7 @@
                   :label-col="formItemLayout.labelCol"
                   :wrapper-col="formItemLayout.wrapperCol"
                   :label="system.confirmPwd">
-                  <a-input-password>
+                  <a-input-password v-decorator="formData.confirmPwd.decorator">
                   </a-input-password>
                 </a-form-item>
                 <a-form-item
@@ -77,7 +76,7 @@
                   :label-col="formItemLayout.labelCol"
                   :wrapper-col="formItemLayout.wrapperCol"
                   :label="system.mobile">
-                  <a-input>
+                  <a-input v-decorator="formData.mobile.decorator">
                   </a-input>
                 </a-form-item>
                 <a-form-item
@@ -249,7 +248,92 @@
         table: {
           loading: false
         },
-        loading: false,
+        formData: {
+          username: {
+            decorator: ['username', {
+              rules: [
+                {
+                  required: true,
+                  message: '请输入用户名'
+                },
+                {
+                  pattern: '^[0-9a-zA-Z]*$',
+                  message: '请输入正确格式的账号（6~16字母、数字组合'
+                },
+                {
+                  min: 6,
+                  message: '请至少输入6位'
+                },
+                {
+                  max: 16,
+                  message: '用户名不能超过16位'
+                }
+              ]
+            }
+            ]
+          },
+          role: {
+            decorator: ['role', {
+              rules: [
+                {
+                  required: true,
+                  message: '请输入角色名称'
+                }
+              ]
+            }]
+          },
+          email: {
+            decorator: ['email', {
+              rules: [
+                {
+                  required: true,
+                  message: '请输入邮件地址'
+                },
+                {
+                  pattern: '^[a-z0-9A-Z]+[- |a-z0-9A-Z._]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-z]{2,6}$',
+                  message: '请输入正确格式的邮箱地址'
+                },
+                {
+                  max: 500,
+                  message: '用户名不能超过16位'
+                }
+              ]
+            }]
+          },
+          mobile: {
+            decorator: ['mobile', {
+              rules: [
+                {
+                  pattern: '^(0|[1-9][0-9]*)$',
+                  message: '请输入正确的手机号'
+                },
+                {
+                  max: 11,
+                  message: '手机号最大不能超过11位'
+                }
+              ]
+            }]
+          },
+          password: {
+            decorator: ['password', {
+              rules: [
+                {
+                  pattern: '(?![0-9]+$)(?![a-z]+$)(?![A-Z]+$)(?!([^(0-9a-zA-Z)])+$).{8,}$',
+                  message: '请输入密码'
+                },
+                {
+                  max: 32,
+                  message: '最多输入32位字符'
+                }
+              ]
+            }]
+          },
+          confirmPwd: {
+            decorator: ['confirmPwd', {
+              rules: [{ validator: this.handleConfirmPassword }]
+            }]
+          }
+        },
         system: {
           account: '账号',
           role: '角色',
@@ -340,7 +424,6 @@
           self.dataSource = res.data.data
         })
       },
-
       addShow: function () {
         this.add.visible = true
       },
